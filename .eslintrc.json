@@ -4,6 +4,8 @@
     "@typescript-eslint/no-unused-vars": [
       "warn",
       { "vars": "all", "args": "after-used", "ignoreRestSiblings": true }
-    ]
+    ],
+    "@typescript-eslint/no-explicit-any": "off" // Desabilita a regra que proíbe o uso de 'any'
   }
 }
+
