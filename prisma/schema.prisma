@@ -7,7 +7,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model droneMission {
+model Delivery {
   id          Int      @id @default(autoincrement())
   model       String
   departure   String
