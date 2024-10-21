@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { formSchema } from '../../schemas/formSchema';
 import { Card } from '@/components/ui/card';
+import { supabase } from '@/lib/supabaseClient'; // Certifique-se de que está importando corretamente
 
-// Define a interface para os dados de entrega
 interface DeliveryData {
   model: string;
   departure: string;
@@ -19,7 +19,7 @@ export default function DroneDeliveryForm() {
   const [departure, setDeparture] = useState<string>('');
   const [destination, setDestination] = useState<string>('');
   const [weight, setWeight] = useState<string>('');
-  const [submittedData, setSubmittedData] = useState<DeliveryData | null>(null); // Use DeliveryData aqui
+  const [submittedData, setSubmittedData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -40,7 +40,7 @@ export default function DroneDeliveryForm() {
       return;
     }
 
-    const data: DeliveryData = {  // Tipagem dos dados
+    const data: DeliveryData = {
       model,
       departure,
       destination,
@@ -49,20 +49,15 @@ export default function DroneDeliveryForm() {
 
     // Enviar dados para a API
     try {
-      const response = await fetch('/api/delivery', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      const { data: responseData, error: responseError } = await supabase
+        .from('delivery') // Certifique-se de que o nome da tabela está correto
+        .insert([data]); // Envia os dados como um array
 
-      if (!response.ok) {
-        throw new Error('Erro ao enviar os dados');
+      if (responseError) {
+        throw new Error(responseError.message);
       }
 
-      const result = await response.json();
-      setSubmittedData(result.data); // Armazena os dados recebidos da API
+      setSubmittedData(responseData); // Armazena os dados recebidos da API
       setSuccessMessage('Entrega criada com sucesso!'); // Mensagem de sucesso
       setError(null); // Limpa qualquer erro anterior
 
