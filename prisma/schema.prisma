@@ -1,0 +1,17 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model droneMission {
+  id          Int      @id @default(autoincrement())
+  model       String
+  departure   String
+  destination String
+  weight      Float
+  createdAt   DateTime @default(now())
+}
