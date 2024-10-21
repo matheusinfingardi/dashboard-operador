@@ -8,11 +8,13 @@ import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from '../ui/
 export function Sidebar() {
     return (
         <div className="flex w-full flex-col bg-muted/40">
+            {/* Sidebar para telas grandes */}
             <aside className='fixed inset-y-0 left-0 z-10 hidden w-20 border-r bg-background sm:flex flex-col'>
                 <nav className='flex flex-col items-center gap-3 px-2 py-5'>
                     <TooltipProvider>
+                        {/* Logo */}
                         <Link
-                            href={"/"} // Corrected to home
+                            href={"/"} // Link para a página inicial
                             className='flex h-9 w-14 shrink-0 items-center justify-center mt-5 mb-12'
                         >
                             <Image 
@@ -25,10 +27,11 @@ export function Sidebar() {
                             <span className='sr-only'>Dashboard Operador</span>
                         </Link>
 
+                        {/* Ícones da Sidebar */}
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Link
-                                    href="/nova-missao" // Corrected to new mission
+                                    href="/nova-missao" // Nova missão
                                     className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground'
                                 >
                                     <Plus className='h-7 w-7 bg-black text-white rounded-md' />
@@ -54,7 +57,7 @@ export function Sidebar() {
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Link
-                                    href="/pedidos" // Orders
+                                    href="/pedidos" // Pedidos
                                     className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground'
                                 >
                                     <Package className='h-5 w-5' />
@@ -67,7 +70,7 @@ export function Sidebar() {
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Link
-                                    href="/clientes" // Clients
+                                    href="/clientes" // Clientes
                                     className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground'
                                 >
                                     <Users className='h-5 w-5' />
@@ -93,7 +96,7 @@ export function Sidebar() {
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Link
-                                    href="/configuracoes" // Settings
+                                    href="/configuracoes" // Configurações
                                     className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground'
                                 >
                                     <Settings className='h-5 w-5' />
@@ -104,12 +107,14 @@ export function Sidebar() {
                         </Tooltip>
                     </TooltipProvider>
                 </nav>
+
+                {/* Seção para sair */}
                 <nav className='mt-auto flex flex-col items-center gap-4 px-2 py-5'>
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Link
-                                    href="/sair" // Corrected to Logout (assuming this is the route for logging out)
+                                    href="/sair" // Sair
                                     className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground'
                                 >
                                     <LogOut className='h-5 w-5' />
@@ -121,8 +126,18 @@ export function Sidebar() {
                     </TooltipProvider>
                 </nav>
             </aside>
-            <div className="sm:hidden flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+
+            {/* Sidebar para telas pequenas */}
+            <div className="sm:hidden flex flex-col">
                 <header className='sticky top-0 z-30 flex h-14 items-center px-4 border-b bg-background gap-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6'>
+                    <Image 
+                        src="/images/logos/images-2.png" 
+                        alt="Logo" 
+                        width={60} 
+                        height={60} 
+                        className='object-contain h-10 w-10' 
+                    />
+                    <h2 className="ml-auto">Menu</h2>
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button size="icon" variant="outline" className='sm:hidden'>
@@ -130,17 +145,9 @@ export function Sidebar() {
                                 <span className='sr-only'> Abrir ou fechar menu </span>
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="left" className='sm:max-w-x'>
+                        <SheetContent side="left" className='sm:max-w-x bg-white'>
                             <nav className='grid gap-6 text-lg font-medium'>
-                                <Link
-                                    href="/" // Assuming the logo links to the home page
-                                    className='flex h-10 w-10 bg-primary rounded-full text-lg items-center justify-center text-primary-foreground md:text-base gap-2'
-                                    prefetch={false}
-                                >
-                                    <Package className='h-5 w-5 transition-all' />
-                                    <span className='sr-only'>Logo</span>
-                                </Link>
-
+                                {/* Links do menu */}
                                 <Link
                                     href="/" // Home
                                     className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
@@ -151,7 +158,7 @@ export function Sidebar() {
                                 </Link>
 
                                 <Link
-                                    href="/pedidos" // Orders
+                                    href="/pedidos" // Pedidos
                                     className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
                                     prefetch={false}
                                 >
@@ -160,7 +167,7 @@ export function Sidebar() {
                                 </Link>
 
                                 <Link
-                                    href="/produtos" // Products (if you have a products page)
+                                    href="/produtos" // Produtos (se houver uma página de produtos)
                                     className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
                                     prefetch={false}
                                 >
@@ -169,7 +176,7 @@ export function Sidebar() {
                                 </Link>
 
                                 <Link
-                                    href="/clientes" // Clients
+                                    href="/clientes" // Clientes
                                     className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
                                     prefetch={false}
                                 >
@@ -178,17 +185,34 @@ export function Sidebar() {
                                 </Link>
 
                                 <Link
-                                    href="/configuracoes" // Settings
+                                    href="/configuracoes" // Configurações
                                     className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
                                     prefetch={false}
                                 >
                                     <Settings className='h-5 w-5 transition-all' />
                                     Configurações
                                 </Link>
+
+                                <Link
+                                    href="/nova-missao" // Nova Missão
+                                    className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
+                                    prefetch={false}
+                                >
+                                    <Plus className='h-5 w-5 transition-all' />
+                                    Nova Missão
+                                </Link>
+
+                                <Link
+                                    href="/sair" // Sair
+                                    className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
+                                    prefetch={false}
+                                >
+                                    <LogOut className='h-5 w-5 transition-all' />
+                                    Sair
+                                </Link>
                             </nav>
                         </SheetContent>
                     </Sheet>
-                    <h2>Menu</h2>
                 </header>
             </div>
         </div>

@@ -25,10 +25,11 @@ export default function RootLayout({
         )}
       >
         <Sidebar/>
-        <main className="ml-20 p-4 flex-1">
+        <main className="flex-1 p-4 sm:ml-20"> 
             {children}
         </main>
       </body>
     </html>
   );
 }
+
