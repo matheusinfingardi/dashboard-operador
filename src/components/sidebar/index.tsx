@@ -2,7 +2,7 @@ import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
 import { Button } from '../ui/button';
 import Link from 'next/link';
 import Image from 'next/image'; // Import Image from Next.js
-import { Home, LogOut, Package, PanelBottom, Plane, Plus, Settings, ShoppingBag, Users } from 'lucide-react';
+import { Home, LandPlot, LogOut, Package, PanelBottom, Plane, Plus, Send, SendIcon, Settings, Users } from 'lucide-react';
 import { TooltipProvider, Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 
 export function Sidebar() {
@@ -57,19 +57,6 @@ export function Sidebar() {
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Link
-                                    href="/pedidos" // Pedidos
-                                    className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground'
-                                >
-                                    <Package className='h-5 w-5' />
-                                    <span className='sr-only'>Pedidos</span>
-                                </Link>
-                            </TooltipTrigger>
-                            <TooltipContent side='right'>Pedidos</TooltipContent>
-                        </Tooltip>
-
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Link
                                     href="/clientes" // Clientes
                                     className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground'
                                 >
@@ -83,6 +70,32 @@ export function Sidebar() {
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Link
+                                    href="/pedidos" // Pedidos
+                                    className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground'
+                                >
+                                    <Package className='h-5 w-5' />
+                                    <span className='sr-only'>Pedidos</span>
+                                </Link>
+                            </TooltipTrigger>
+                            <TooltipContent side='right'>Pedidos</TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Link
+                                    href="/missoes" // Drones
+                                    className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground'
+                                >
+                                    <Send className='h-5 w-5' />
+                                    <span className='sr-only'>Missões</span>
+                                </Link>
+                            </TooltipTrigger>
+                            <TooltipContent side='right'>Missões</TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Link
                                     href="/drones" // Drones
                                     className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground'
                                 >
@@ -91,6 +104,19 @@ export function Sidebar() {
                                 </Link>
                             </TooltipTrigger>
                             <TooltipContent side='right'>Drones</TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Link
+                                    href="/infraestrutura" // Drones
+                                    className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground'
+                                >
+                                    <LandPlot className='h-5 w-5' />
+                                    <span className='sr-only'>Infraestrutura</span>
+                                </Link>
+                            </TooltipTrigger>
+                            <TooltipContent side='right'>Infraestrutura</TooltipContent>
                         </Tooltip>
 
                         <Tooltip>
@@ -149,30 +175,21 @@ export function Sidebar() {
                             <nav className='grid gap-6 text-lg font-medium'>
                                 {/* Links do menu */}
                                 <Link
+                                    href="/nova-missao" // Nova Missão
+                                    className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
+                                    prefetch={false}
+                                >
+                                    <Plus className='h-5 w-5 transition-all' />
+                                    Nova Missão
+                                </Link>
+
+                                <Link
                                     href="/" // Home
                                     className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
                                     prefetch={false}
                                 >
                                     <Home className='h-5 w-5 transition-all' />
                                     Home
-                                </Link>
-
-                                <Link
-                                    href="/pedidos" // Pedidos
-                                    className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
-                                    prefetch={false}
-                                >
-                                    <ShoppingBag className='h-5 w-5 transition-all' />
-                                    Pedidos
-                                </Link>
-
-                                <Link
-                                    href="/produtos" // Produtos (se houver uma página de produtos)
-                                    className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
-                                    prefetch={false}
-                                >
-                                    <Package className='h-5 w-5 transition-all' />
-                                    Produtos
                                 </Link>
 
                                 <Link
@@ -185,6 +202,43 @@ export function Sidebar() {
                                 </Link>
 
                                 <Link
+                                    href="/pedidos" // Pedidos
+                                    className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
+                                    prefetch={false}
+                                >
+                                    <Package className='h-5 w-5 transition-all' />
+                                    Pedidos
+                                </Link>
+
+                                <Link
+                                    href="/missoes" // Produtos (se houver uma página de produtos)
+                                    className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
+                                    prefetch={false}
+                                >
+                                    <SendIcon className='h-5 w-5 transition-all' />
+                                    Missões
+                                </Link>
+
+                                <Link
+                                    href="/produtos" // Produtos (se houver uma página de produtos)
+                                    className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
+                                    prefetch={false}
+                                >
+                                    <Plane className='h-5 w-5 transition-all' />
+                                    Drones
+                                </Link>
+
+                                <Link
+                                    href="/infraestrutura" // Produtos (se houver uma página de produtos)
+                                    className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
+                                    prefetch={false}
+                                >
+                                    <LandPlot className='h-5 w-5 transition-all' />
+                                    Infraestrutura
+                                </Link>
+
+
+                                <Link
                                     href="/configuracoes" // Configurações
                                     className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
                                     prefetch={false}
@@ -193,14 +247,6 @@ export function Sidebar() {
                                     Configurações
                                 </Link>
 
-                                <Link
-                                    href="/nova-missao" // Nova Missão
-                                    className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'
-                                    prefetch={false}
-                                >
-                                    <Plus className='h-5 w-5 transition-all' />
-                                    Nova Missão
-                                </Link>
 
                                 <Link
                                     href="/sair" // Sair
