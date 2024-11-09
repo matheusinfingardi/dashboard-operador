@@ -6,4 +6,3 @@ export type Drone = {
     nivelBateria: number;
     condicaoUso: "Boa" | "Regular" | "Ruim";
   };
-  

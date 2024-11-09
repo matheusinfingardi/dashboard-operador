@@ -13,14 +13,14 @@ const Drones: React.FC = () => {
   const [drones, setDrones] = useState<Drone[]>([]);
 
   const handleAddDrone = (id: string) => {
-    const newDrone = {
+    const newDrone: Drone = {
       id,
       status: 'Disponível',
       local: 'Base A',
       nivelBateria: 100,
       condicaoUso: 'Boa',
     };
-    setDrones([...drones, newDrone]);
+    setDrones((prevDrones) => [...prevDrones, newDrone]);
   };
 
   const handleRemoveDrone = (id: string) => {
