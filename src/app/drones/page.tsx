@@ -1,6 +1,4 @@
-// pages/drones.tsx
-
-'use client';
+'use client'
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
@@ -44,6 +42,29 @@ const Drones = () => {
     }
   };
 
+  // Função para conectar o drone
+  const connectDrone = async (droneId: string) => {
+    try {
+      const response = await fetch(`https://four2-drone-microsservices.onrender.com/connect?drone_id=${droneId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(`Drone ${droneId} conectado com sucesso!`);
+        handleAddDrone(); // Atualiza a lista de drones para refletir a nova conexão
+      } else {
+        alert(`Erro ao conectar drone: ${result.detail}`);
+      }
+    } catch (error) {
+      console.error('Erro de rede:', error);
+      alert('Erro ao tentar conectar o drone.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <Card className="max-w-6xl mx-auto bg-white shadow-lg rounded-md">
@@ -55,7 +76,11 @@ const Drones = () => {
           <AddDroneForm onAddDrone={handleAddDrone} />
           
           {/* Tabela de drones */}
-          <DroneTable drones={drones} onUpdateDrones={handleAddDrone} />
+          <DroneTable 
+            drones={drones} 
+            onUpdateDrones={handleAddDrone} 
+            onConnectDrone={connectDrone} // Passa a função para a tabela
+          />
         </CardContent>
       </Card>
     </div>
