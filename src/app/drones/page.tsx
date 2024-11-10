@@ -1,85 +1,63 @@
-// src/pages/Drones.tsx
-'use client'
-import React, { useState } from 'react';
-import AdicionarDroneForm from '@/components/forms/drone/AdicionarDroneForm';
-import RemoverDroneForm from '@/components/forms/drone/RemoverDroneForm';
-import VerDroneForm from '@/components/forms/drone/VerDroneForm';
-import EditarDroneForm from '@/components/forms/drone/EditarDroneForm';
-import { TabelaDrones } from '@/components/data-table/TabelaDrones';
-import { Drone } from '@/types/drone';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
+// pages/drones.tsx
 
-const Drones: React.FC = () => {
+'use client';
+
+import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabaseClient';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import AddDroneForm from '@/components/forms/drone/AdicionarDroneForm';
+import DroneTable from '@/components/data-table/TabelaDrones';
+import { Drone } from '@/types/drone';
+
+const Drones = () => {
   const [drones, setDrones] = useState<Drone[]>([]);
 
-  const handleAddDrone = (id: string) => {
-    const newDrone: Drone = {
-      id,
-      status: 'Disponível',
-      local: 'Base A',
-      nivelBateria: 100,
-      condicaoUso: 'Boa',
+  // Carrega os drones do banco de dados
+  useEffect(() => {
+    const fetchDrones = async () => {
+      const { data, error } = await supabase
+        .from('drones')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Erro ao carregar drones:', error);
+      } else {
+        setDrones(data);
+      }
     };
-    setDrones((prevDrones) => [...prevDrones, newDrone]);
-  };
 
-  const handleRemoveDrone = (id: string) => {
-    setDrones(drones.filter((drone) => drone.id !== id));
-  };
+    fetchDrones();
+  }, []);
 
-  const handleEditDrone = (id: string, updatedDrone: Drone) => {
-    setDrones(
-      drones.map((drone) => (drone.id === id ? { ...drone, ...updatedDrone } : drone))
-    );
+  // Função para atualizar a lista de drones
+  const handleAddDrone = async () => {
+    const { data, error } = await supabase
+      .from('drones')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Erro ao atualizar drones:', error);
+    } else {
+      setDrones(data); // Atualiza a lista de drones
+    }
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6">
-      {/* Grid de Cards Responsivos */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Card Adicionar Drone */}
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Adicionar Drone</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <AdicionarDroneForm onAddDrone={handleAddDrone} />
-          </CardContent>
-        </Card>
-
-        {/* Card Remover Drone */}
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Remover Drone</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <RemoverDroneForm onRemoveDrone={handleRemoveDrone} />
-          </CardContent>
-        </Card>
-
-        {/* Card Ver Drone */}
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Ver Drone</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <VerDroneForm drones={drones} />
-          </CardContent>
-        </Card>
-
-        {/* Card Editar Drone (Ocupa mais espaço nas telas maiores) */}
-        <Card className="lg:col-span-3 w-full">
-          <CardHeader>
-            <CardTitle>Editar Drone</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <EditarDroneForm drones={drones} onEditDrone={handleEditDrone} />
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Tabela de Drones */}
-      <TabelaDrones drones={drones} />
+    <div className="min-h-screen bg-gray-50 p-6">
+      <Card className="max-w-6xl mx-auto bg-white shadow-lg rounded-md">
+        <CardHeader>
+          <CardTitle className="text-xl font-semibold">Conexões de Drones</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {/* Formulário para adicionar drones */}
+          <AddDroneForm onAddDrone={handleAddDrone} />
+          
+          {/* Tabela de drones */}
+          <DroneTable drones={drones} onUpdateDrones={handleAddDrone} />
+        </CardContent>
+      </Card>
     </div>
   );
 };

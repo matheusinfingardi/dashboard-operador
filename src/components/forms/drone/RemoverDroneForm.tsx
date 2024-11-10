@@ -1,37 +1,39 @@
-// src/components/forms/drone/RemoverDroneForm.tsx
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';  // Botão importado do shadcn
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Drone } from '@/types/drone';
+import { supabase } from '@/lib/supabaseClient';
 
 interface RemoverDroneFormProps {
   onRemoveDrone: (id: string) => void;
 }
 
 const RemoverDroneForm: React.FC<RemoverDroneFormProps> = ({ onRemoveDrone }) => {
-  const [id, setId] = useState('');
+  const [selectedDroneId, setSelectedDroneId] = useState<string>('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleRemove = async (e: React.FormEvent) => {
     e.preventDefault();
-    onRemoveDrone(id);
-    setId('');
+
+    if (selectedDroneId) {
+      const { error } = await supabase.from('Drone').delete().eq('Drone_id', Number(selectedDroneId));
+
+      if (error) {
+        console.error('Erro ao remover drone:', error.message);
+      } else {
+        onRemoveDrone(selectedDroneId);
+        alert('Drone removido com sucesso!');
+      }
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <Label htmlFor="id">ID do Drone</Label>
-        <Input
-          id="id"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-          placeholder="Digite o ID do drone para remover"
-          required
-        />
-      </div>
-      <Button type="submit" className="w-full bg-black text-white hover:bg-gray-800">
-        Remover Drone
-      </Button>
+    <form onSubmit={handleRemove}>
+      <select
+        value={selectedDroneId}
+        onChange={(e) => setSelectedDroneId(e.target.value)}
+      >
+        {/* Aqui, preenchemos com os drones existentes */}
+      </select>
+
+      <button type="submit">Remover Drone</button>
     </form>
   );
 };
